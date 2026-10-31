@@ -1,68 +1,49 @@
-# 👻 Ghost in the Machine (NecroOS)
+# Ghost in the Machine (NecroOS)
 
-> An interactive gothic-cyberpunk terminal and digital Día de los Muertos ofrenda powered entirely by local open-weight AI (**Gemma 3:4B** on Ollama). Built for Hacktoberfest Open-Source AI Challenge: Week 4.
+*This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine](https://dev.to/challenges/hacktoberfest-week4-2026-10-26)*
 
----
+## What I Built
 
-## 🎃 Overview
+Ghost in the Machine is a gothic-cyberpunk terminal and digital Día de los Muertos ofrenda. It reimagines the theme as a séance for the people, memories, and technologies that shaped computing.
 
-**Ghost in the Machine (NecroOS)** brings together the eerie thrill of Halloween and the profound remembrance of Día de los Muertos (Nov 1–2). Operating inside a retro-futuristic curved CRT terminal with procedural Web Audio synthesis, the app features:
+The experience includes a haunted terminal, an interactive altar with candles and AI-generated blessings, and spirit channels for retired programming languages including COBOL, Flash/ActionScript, ALGOL 68, Turbo Pascal, and x86 Assembly. A procedural Web Audio soundscape adds ambient drones, keystrokes, radio static, and altar chimes.
 
-1. **💻 Haunted Shell (Terminal):** An interactive terminal possessed by an ancient digital phantom. Run commands like `whoami`, `ls -la /souls`, `git commit`, `kill -9 phantom`, or speak freely to the machine.
-2. **🌼 Digital Ofrenda (Día de los Muertos Altar):** A cyber-altar honoring the pioneers who built modern computing (Ada Lovelace, Alan Turing, Grace Hopper, Dennis Ritchie) and departed software (Macromedia Flash, Netscape, GeoCities). Features interactive flickering candles, traditional offerings (*Cempasúchil*, *Pan de Muerto*, *Sugar Calaveras*, *Copal Incense*), and live AI blessings generated in real-time.
-3. **🔮 Language Séance:** A digital spirit board channeling the lingering ghosts of retired programming languages:
-   - 🏛️ **COBOL (1959)** — Mainframe titan balancing global ledgers.
-   - ⚡ **ActionScript 3 / Flash** — The fallen creator of interactive web animation.
-   - 📜 **ALGOL 68** — The father of modern block structures.
-   - 🕹️ **Turbo Pascal** — 1980s lightning-fast compilation wizardry.
-   - ⚙️ **x86 Assembly** — Bare-metal poltergeist speaking in registers and opcodes.
+## Demo
 
----
+The project runs locally. Follow the setup below to open it at [http://localhost:3000](http://localhost:3000). There is no hosted demo.
 
-## ⚡ Why Open Innovation & Open-Weight AI (Gemma) Matter
+## Code
 
-In keeping with the Hacktoberfest prompt:
-- **Zero Cloud Leakage & Total Privacy:** In the sacred spirit of Día de los Muertos, your personal remembrances, memories of loved ones, and shell commands never leave your machine.
-- **Offline Resiliency:** Runs completely with the internet and lights switched off.
-- **No SaaS Obsolescence:** Closed-source APIs can be deprecated or sunsetted overnight. Open-weight models like **Gemma** guarantee that your creative software remains immortal.
+Source code: [github.com/W47K3RJO1N/ghost-in-the-machine](https://github.com/W47K3RJO1N/ghost-in-the-machine)
 
----
+## How I Built It
 
-## 🚀 Quick Start
+The frontend uses vanilla HTML, CSS, and JavaScript. A small native Node.js HTTP server serves the app and connects it to [Ollama](https://ollama.com/) on the same machine. Gemma 3:4B generates the ghost's replies and ofrenda blessings locally. If Ollama is unavailable, the app uses its built-in spectral fallback responses.
 
-### 1. Prerequisites
-- **Node.js** v18+ (tested on v24)
-- **Ollama** with `gemma3:4b` (or `gemma4:e2b`):
-  ```bash
-  ollama run gemma3:4b
-  ```
+No third-party runtime packages are required. To run it:
 
-### 2. Launch the Application
-```bash
-# Clone and enter workspace
-cd h:/hackweek4
+1. Install Node.js 18 or newer.
+2. Install Ollama and download the model:
 
-# Launch the server (zero external dependencies required!)
-node server.mjs
-```
+   ```sh
+   ollama pull gemma3:4b
+   ```
 
-Open your browser to:
-**[http://localhost:3000](http://localhost:3000)**
+3. Start the server from the project directory:
 
----
+   ```sh
+   node server.mjs
+   ```
 
-## 🛠️ Architecture & Tech Stack
+4. Open [http://localhost:3000](http://localhost:3000).
 
-- **Backend:** Native Node.js HTTP Server (`server.mjs`) proxying to Ollama's local REST API (`http://localhost:11434/api/generate`) with graceful offline fallback.
-- **Frontend:** Vanilla HTML5, CSS3 with glassmorphism and scanline shaders, and ES6 JavaScript (`public/app.js`).
-- **Sound Engine:** Web Audio API procedural synthesizer (`public/audio.js`) generating low ambient dark drones, mechanical keystrokes, EVP radio static, and sacred ofrenda bell harmonics with 0 external audio files.
-- **AI Engine:** Google Gemma 3 (4B / open-weight) running on local GPU.
+## Why Does Open Innovation Matter?
 
----
+Running an open-weight model locally means personal remembrances and conversations can stay on the user's own machine instead of being sent to a hosted AI API. It also makes the experience available without depending on a commercial AI service; if Ollama or Gemma is unavailable, the built-in fallback keeps the app usable.
 
-## 🏆 DEV Hacktoberfest Week 4 Submission
+Open tools made it possible to build an AI experience around intimate memories while keeping the inference setup inspectable and locally controlled.
 
-- **Tag:** `#hf26challenge`
-- **Featured Category:** **Best Use of Gemma** ($200) & Overall Prize
-- **Submission Title:** *Ghost in the Machine: NecroOS & The Digital Ofrenda Powered by Local Gemma*
-- **License:** MIT License
+## Prize Categories
+
+- Best Use of Gemma
+- Overall prize
