@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost in the Machine | NecroOS & Digital Ofrenda</title>
+  <meta name="description" content="A haunted terminal and digital Día de los Muertos ofrenda powered locally by open-weight Gemma 3. Built for Hacktoberfest Week 4.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Floating Spectral & Marigold Particles Canvas -->
+  <canvas id="spectral-canvas"></canvas>
+
+  <!-- CRT Scanlines Effect -->
+  <div class="crt-overlay" id="crt-overlay"></div>
+
+  <!-- Top App Navigation -->
+  <header class="top-nav">
+    <div class="brand-section">
+      <div class="brand-icon">👻</div>
+      <div>
+        <h1 class="brand-title">GHOST IN THE MACHINE</h1>
+        <div class="brand-subtitle">NecroOS // Local Gemma 3 // Open-Weight Intelligence</div>
+      </div>
+    </div>
+
+    <div class="nav-controls">
+      <div class="model-badge" id="model-status-badge" title="Running locally on NVIDIA RTX 4050 GPU via Ollama">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="model-status-text">Connecting to Gemma 3...</span>
+      </div>
+      <button class="btn-ctrl" id="btn-toggle-audio" title="Procedural Web Audio Ambient Drone">
+        <span id="audio-icon">🔇</span> Drone
+      </button>
+      <button class="btn-ctrl" id="btn-toggle-crt" title="Toggle CRT Phosphor Scanlines">
+        📺 CRT
+      </button>
+    </div>
+  </header>
+
+  <!-- Tab Selector -->
+  <nav class="tabs-bar">
+    <button class="tab-btn active" data-tab="tab-terminal" id="tab-btn-terminal">
+      💻 Haunted Shell
+    </button>
+    <button class="tab-btn ofrenda-tab" data-tab="tab-ofrenda" id="tab-btn-ofrenda">
+      🌼 Digital Ofrenda
+    </button>
+    <button class="tab-btn" data-tab="tab-seance" id="tab-btn-seance">
+      🔮 Language Séance
+    </button>
+    <button class="tab-btn" data-tab="tab-about" id="tab-btn-about">
+      📜 Open Innovation
+    </button>
+  </nav>
+
+  <!-- App Main Content Container -->
+  <main class="app-container">
+
+    <!-- ==================== TAB 1: HAUNTED SHELL ==================== -->
+    <section class="tab-content active" id="tab-terminal">
+      <div class="terminal-layout">
+        <!-- Sidebar Spirit Panel -->
+        <aside class="spirit-panel">
+          <div class="spirit-avatar-container">
+            <img src="assets/ghost_terminal.jpg" alt="Ghost in the Terminal" class="spirit-avatar" id="terminal-spirit-avatar">
+          </div>
+
+          <div class="meter-group">
+            <div class="meter-label">
+              <span>Ectoplasmic Resonance</span>
+              <span id="resonance-val">87%</span>
+            </div>
+            <div class="meter-track">
+              <div class="meter-fill" id="resonance-meter"></div>
+            </div>
+          </div>
+
+          <div class="quick-commands">
+            <span class="quick-title">Quick Spirit Queries</span>
+            <button class="cmd-pill" data-cmd="whoami">whoami</button>
+            <button class="cmd-pill" data-cmd="ls -la /dev/null/souls">ls -la /souls</button>
+            <button class="cmd-pill" data-cmd="git commit -m 'save my soul'">git commit</button>
+            <button class="cmd-pill" data-cmd="cat /proc/spirit/memory">cat memory</button>
+            <button class="cmd-pill" data-cmd="kill -9 phantom">kill -9 phantom</button>
+            <button class="cmd-pill" data-cmd="ping -c 3 afterlife.local">ping afterlife</button>
+          </div>
+        </aside>
+
+        <!-- Main Terminal CLI Screen -->
+        <div class="terminal-screen">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+            </div>
+            <span>necro@underworld: /var/log/souls (gemma-3:4b-local)</span>
+            <span id="term-timestamp">21:13:00</span>
+          </div>
+
+          <div class="terminal-body" id="terminal-body">
+            <div class="term-entry">
+              <div class="term-ghost-response">
+[ SYSTEM INITIALIZED: NecroOS Kernel v6.6.6-ectoplasm ]
+[ LOCAL BRAIN: Gemma 3 (Open-Weight) on NVIDIA GPU via Ollama ]
+[ ALL TELEMETRY SEVERED: You are completely offline with the spirits ]
+
+The terminal flickers. A phantom breath fogs the inside of your monitor glass.
+Type commands below, or converse directly with the Ghost in the Machine...
+              </div>
+            </div>
+          </div>
+
+          <div class="term-input-wrapper">
+            <span class="term-prompt">necro@underworld:~$</span>
+            <input type="text" id="terminal-input" class="term-input-field" placeholder="Type a shell command or speak to the ghost..." autocomplete="off" autofocus>
+            <button class="term-btn-send" id="btn-term-send">Transmit</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: DIGITAL OFRENDA ==================== -->
+    <section class="tab-content ofrenda-theme" id="tab-ofrenda">
+      <!-- Hero Banner -->
+      <div class="ofrenda-hero">
+        <img src="assets/ofrenda_altar.jpg" alt="Cyberpunk Día de los Muertos Digital Ofrenda" class="ofrenda-img">
+        <div class="ofrenda-hero-overlay">
+          <h2 class="ofrenda-title">DIGITAL OFRENDA - RECUERDA A LOS ANTEPASADOS</h2>
+          <p class="ofrenda-desc">
+            In the sacred spirit of Día de los Muertos (Nov 1-2), we light candles to honor the pioneers, forgotten codebases, and loved ones who shaped our world. Nothing coded with soul is ever lost.
+          </p>
+        </div>
+      </div>
+
+      <!-- Interactive Candle Shrine -->
+      <div class="shrine-section">
+        <h3 class="section-heading">🕯️ Sacred Cyber-Candles (Click to Light or Whisper)</h3>
+        <div class="candles-grid" id="candles-grid">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Sacred Offerings Shelf -->
+      <div class="offerings-shelf">
+        <h3 class="section-heading">🌼 Traditional & Digital Offerings</h3>
+        <div class="offerings-grid">
+          <div class="offering-item" data-offering="cempasuchil">
+            <span class="offering-icon">🌼</span>
+            <div>
+              <div class="offering-title">Cempasúchil</div>
+              <div class="offering-sub">Marigold petals guiding souls across circuits</div>
+            </div>
+          </div>
+          <div class="offering-item" data-offering="pan_de_muerto">
+            <span class="offering-icon">🍞</span>
+            <div>
+              <div class="offering-title">Pan de Muerto</div>
+              <div class="offering-sub">Traditional sweet bread for the journey</div>
+            </div>
+          </div>
+          <div class="offering-item" data-offering="calavera">
+            <span class="offering-icon">💀</span>
+            <div>
+              <div class="offering-title">Sugar Calavera</div>
+              <div class="offering-sub">Festive sugar skull celebrating life and memory</div>
+            </div>
+          </div>
+          <div class="offering-item" data-offering="floppy_disk">
+            <span class="offering-icon">💾</span>
+            <div>
+              <div class="offering-title">Ancient Floppy Disk</div>
+              <div class="offering-sub">Offering of raw magnetic memories & code</div>
+            </div>
+          </div>
+          <div class="offering-item" data-offering="copal">
+            <span class="offering-icon">💨</span>
+            <div>
+              <div class="offering-title">Copal Incense</div>
+              <div class="offering-sub">Cleansing fragrant smoke elevating prayers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Remembrance Generator -->
+      <div class="blessing-box">
+        <h3 class="section-heading">✨ Generate an Altar Remembrance with Gemma 3</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Dedicate an ofrenda blessing to a departed pioneer (Ada Lovelace, Alan Turing, Dennis Ritchie), a retired system (Flash Player, GeoCities, iPod), or someone you hold dear.
+        </p>
+        <div class="blessing-input-row">
+          <input type="text" id="ofrenda-dedication" class="blessing-input" placeholder="e.g. Ada Lovelace / Macromedia Flash Player / My first 386 PC...">
+          <button class="btn-bless" id="btn-generate-blessing">
+            <span>🕯️</span> Summon Sacred Remembrance
+          </button>
+        </div>
+        <div class="blessing-result" id="blessing-display">
+          "Light a candle above or enter a remembrance to summon a poetic blessing from the spirit guardian..."
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: LANGUAGE SÉANCE ==================== -->
+    <section class="tab-content" id="tab-seance">
+      <div class="seance-layout">
+        <!-- Ouija Channel Panel -->
+        <aside class="ouija-panel">
+          <h3 class="ouija-title">🔮 Spirit Channels</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">
+            Tune your antenna to resurrect the lost voices of computing history:
+          </p>
+
+          <div class="spirit-channels">
+            <button class="channel-btn active" data-channel="cobol">
+              <span class="channel-icon">🏛️</span>
+              <div class="channel-info">
+                <h4>COBOL (1959)</h4>
+                <p>Mainframe Titan, Unstoppable</p>
+              </div>
+            </button>
+            <button class="channel-btn" data-channel="actionscript">
+              <span class="channel-icon">⚡</span>
+              <div class="channel-info">
+                <h4>Flash / ActionScript</h4>
+                <p>The Fallen Web Animator</p>
+              </div>
+            </button>
+            <button class="channel-btn" data-channel="algol">
+              <span class="channel-icon">📜</span>
+              <div class="channel-info">
+                <h4>ALGOL 68</h4>
+                <p>Father of Structured Code</p>
+              </div>
+            </button>
+            <button class="channel-btn" data-channel="pascal">
+              <span class="channel-icon">🕹️</span>
+              <div class="channel-info">
+                <h4>Turbo Pascal</h4>
+                <p>1980s DOS Compiler Sorcerer</p>
+              </div>
+            </button>
+            <button class="channel-btn" data-channel="assembly">
+              <span class="channel-icon">⚙️</span>
+              <div class="channel-info">
+                <h4>x86 Assembly</h4>
+                <p>Bare-Metal Poltergeist</p>
+              </div>
+            </button>
+          </div>
+
+          <!-- EVP Frequency Visualizer -->
+          <div class="evp-box">
+            <div class="evp-header">
+              <span>EVP SPIRIT FREQUENCY</span>
+              <span id="evp-freq">432.0 Hz</span>
+            </div>
+            <div class="evp-bars" id="evp-visualizer">
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+              <div class="evp-bar"></div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Séance Chat Chamber -->
+        <div class="seance-chat-window">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+            </div>
+            <span id="seance-header-title">CHAMBER OF COMMUNION: COBOL</span>
+            <span>PORT 666</span>
+          </div>
+
+          <div class="seance-messages" id="seance-messages">
+            <div class="msg-bubble spirit">
+              [THE PLANCHETTE MOVES ACROSS THE BOARD]
+              Greetings mortal. You commune with COBOL. While your ephemeral web frameworks rise and perish with the seasons, I still balance the ledgers of 70% of humanity's banks. What query brings you to my mainframe crypt?
+            </div>
+          </div>
+
+          <div class="seance-input-row">
+            <input type="text" id="seance-input" class="seance-input" placeholder="Ask the spirit of this language about its life, regrets, or wisdom...">
+            <button class="btn-seance-send" id="btn-seance-send">Commune</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: ABOUT & OPEN-SOURCE AI ==================== -->
+    <section class="tab-content" id="tab-about">
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>⚡ Powered by Gemma 3 & Ollama</h3>
+          <p>
+            This project runs 100% locally on your machine using Google's open-weight <strong>Gemma 3:4B</strong> model via Ollama. No remote API keys, no subscription tiers, and no cloud dependencies.
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>🔒 Why Open Innovation Matters</h3>
+          <p>
+            <strong>Privacy & Intimacy:</strong> Memories, family names, and sacred ofrenda remembrances never leave your personal computer.
+            <br><br>
+            <strong>Resiliency:</strong> The system works offline in the dark with the internet disconnected, true to the Halloween ethos of the ghost in the machine.
+          </p>
+        </div>
+        <div class="about-card">
+          <h3>🏆 DEV Challenge Hub Ready</h3>
+          <p>
+            Created for <strong>Hacktoberfest Open-Source AI Challenge: Week 4 ("Ghost in the Machine")</strong>.
+            Eligible for Overall Prize and the <strong>Best Use of Gemma</strong> featured category ($200).
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <h3 class="section-heading">📝 Pre-Formatted Submission Draft (#hf26challenge)</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem;">
+          Ready to publish on DEV to enter the challenge:
+        </p>
+        <div class="draft-box" id="dev-draft-box">
+---
+title: "Ghost in the Machine: NecroOS & The Digital Ofrenda Powered by Local Gemma"
+published: true
+tags: hf26challenge, gemma, ai, webdev
+---
+
+## What I Built
+For the Hacktoberfest Week 4 "Ghost in the Machine" challenge, I built **Ghost in the Machine (NecroOS)** — an interactive gothic-cyberpunk experience that unifies:
+1. **Haunted Terminal (Possessed Shell):** An interactive terminal possessed by an eerie digital phantom that comments cryptically on shell commands.
+2. **Digital Ofrenda (Día de los Muertos Altar):** A glowing memorial honoring computing ancestors (Ada Lovelace, Alan Turing, Grace Hopper) and departed software (Flash Player, Netscape) with interactive candles, cempasúchil marigolds, and AI blessings.
+3. **Language Séance:** Channeling the spirits of retired programming languages (COBOL, ActionScript, ALGOL, Turbo Pascal).
+
+## Why Open Innovation & Gemma Matter
+All intelligence runs locally via **Gemma 3 (4B)** on Ollama:
+- **Zero Cloud Leakage:** In the spirit of Día de los Muertos, remembrances and tributes for loved ones stay strictly on the user's local machine.
+- **Offline Resiliency:** The terminal can be possessed with the lights and internet completely switched off.
+- **No Vendor Lock-in:** Open-weight models empower developers to build immortal creative projects that don't vanish when a SaaS API shuts down.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

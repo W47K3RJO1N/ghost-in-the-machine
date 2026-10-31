@@ -1,0 +1,22 @@
+{
+  "name": "ghost-in-the-machine",
+  "version": "1.0.0",
+  "description": "NecroOS: A haunted terminal and digital Día de los Muertos ofrenda powered by local open-weight Gemma",
+  "main": "server.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "keywords": [
+    "hacktoberfest",
+    "gemma",
+    "open-weight",
+    "ollama",
+    "dia-de-los-muertos",
+    "halloween",
+    "ghost-in-the-machine"
+  ],
+  "author": "Antigravity & Pair Developer",
+  "license": "MIT"
+}
